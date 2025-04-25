@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thư Gửi Bạn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(120deg, #FFDEE9, #B5FFFC);
+      text-align: center;
+      padding: 40px 20px;
+      color: #333;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #FF6F91;
+    }
+    .input-box {
+      margin: 20px 0;
+    }
+    input {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      width: 70%;
+      max-width: 300px;
+      outline: none;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background-color: #FF9AA2;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #FF6F91;
+      transform: scale(1.05);
+    }
+    .letter {
+      background-color: white;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      margin: 40px auto 0;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      display: none;
+      animation: fadeIn 1.2s ease-in-out;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .letter img {
+      width: 100%;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background-color: #F1F1F1;
+      border-radius: 25px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+    .progress {
+      height: 100%;
+      width: 0%;
+      background-color: #FF6F91;
+      border-radius: 25px;
+      position: relative;
+    }
+    .loading-text {
+      font-size: 1.2rem;
+      color: #FF6F91;
+      margin-top: 10px;
+    }
+
+    .flower {
+      position: fixed;
+      top: -50px;
+      font-size: 30px;
+      animation: fall 5s linear forwards;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gửi bạn 1 lá thư nè ! 💖</h1>
+  <div class="input-box">
+    <input type="text" id="tenBan" placeholder="Nhập tên bạn ở đây nhaaa">
+    <br>
+    <button onclick="hienThu()">Nhận thư nàoo 💌</button>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress" id="progress"></div>
+  </div>
+  <div id="loadingText" class="loading-text" style="display: none;">Loading...</div>
+
+  <div class="letter" id="thuXinh">
+    <h2 id="nguoiNhan">Gửi bạn</h2>
+    <p id="noiDungThu"></p>
+    <p style="margin-top: 15px;"> Mong bạn sẽ không bùn nhiều, không bỏ bữa và luôn cười thật tươi ! ✨</p>
+  </div>
+
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    function hienThu() {
+      const ten = document.getElementById("tenBan").value.trim();
+      if (ten === "") {
+        alert("Nhập tên trước khi nhận thư nhaaaa!");
+        return;
+      }
+
+      document.getElementById("thuXinh").style.display = "none";
+      document.getElementById("loadingText").style.display = "block";
+
+      let progress = document.getElementById("progress");
+      let width = 0;
+      let interval = setInterval(function() {
+        if (width >= 100) {
+          clearInterval(interval);
+          document.getElementById("loadingText").style.display = "none";
+          document.getElementById("thuXinh").style.display = "block";
+
+          document.getElementById("nguoiNhan").innerText = `Gửi bạn, ${ten}`;
+          document.getElementById("noiDungThu").innerText = `hello Ban nha, chúc bạn một ngày thiệc tốt lành `;
+
+          // Rải hoa ngay sau khi hiện thư
+          for (let i = 0; i < 20; i++) {
+            let hoa = document.createElement("div");
+            hoa.className = "flower";
+            hoa.innerText = "🌸";
+            hoa.style.left = Math.random() * 100 + "vw";
+            hoa.style.animationDuration = (3 + Math.random() * 2) + "s";
+            document.body.appendChild(hoa);
+
+            setTimeout(() => {
+              hoa.remove();
+            }, 5000);
+          }
+
+        } else {
+          width++;
+          progress.style.width = width + "%";
+        }
+      }, 50);
+    }
+  </script>
+
+</body>
+</html>
